@@ -6,10 +6,10 @@ logger = logging.getLogger(__name__)
 
 import numpy as np
 import pandas as pd
-from ml.models.train_managers.base_train_manager import BaseTrainManager
+from deepself.models.train_managers.base_train_manager import BaseTrainManager
 from tqdm import tqdm
 from typing import Tuple
-from ml.utils.utils import Metrics
+from deepself.utils.utils import Metrics
 
 
 @contextmanager

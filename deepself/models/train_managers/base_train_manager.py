@@ -10,27 +10,24 @@ logger = logging.getLogger(__name__)
 import numpy as np
 import pandas as pd
 import torch
-from ml.models.model_managers.ml_model_manager import MLModelManager
-from ml.models.model_managers.nn_model_manager import NNModelManager
+from deepself.models.model_managers.nn_model_manager import NNModelManager
 from sklearn.metrics import confusion_matrix
-from ml.utils.logger import TensorBoardLogger
+from deepself.utils.logger import TensorBoardLogger
 from typing import Tuple, List, Union
-from ml.utils.utils import Metrics
+from deepself.utils.utils import Metrics
 
 
-from ml.utils.enums import TaskType
-from ml.models.model_managers.base_model_manager import ExtendedModelConfig, ModelConfig
+from deepself.utils.enums import TaskType
+from deepself.models.model_managers.base_model_manager import ExtendedModelConfig, ModelConfig
 from dataclasses import dataclass, field
 from omegaconf import OmegaConf
-from ml.models.nn_models.nn import NNConfig
-from ml.models.nn_models.rnn import RNNConfig
-from ml.models.nn_models.cnn import CNNConfig
-from ml.models.nn_models.cnn_rnn import CNNRNNConfig
-from ml.models.nn_models.pretrained_models import PretrainedConfig
-from ml.models.nn_models.panns_cnn14 import PANNsConfig
-from ml.models.ml_models.toolbox import MlModelManagerConfig
-from ml.models.ml_models.decision_trees import DecisionTreeConfig
-from ml.utils.enums import NNType, PretrainedType, ModelType
+from deepself.models.nn_models.nn import NNConfig
+from deepself.models.nn_models.rnn import RNNConfig
+from deepself.models.nn_models.cnn import CNNConfig
+from deepself.models.nn_models.cnn_rnn import CNNRNNConfig
+from deepself.models.nn_models.pretrained_models import PretrainedConfig
+from deepself.models.nn_models.panns_cnn14 import PANNsConfig
+from deepself.utils.enums import NNType, PretrainedType, ModelType
 
 
 CNN_MODELS = [CNNConfig, CNNRNNConfig, PretrainedConfig, PANNsConfig]
@@ -90,7 +87,7 @@ class BaseTrainManager(metaclass=ABCMeta):
         self.metrics = metrics
         Path(self.cfg.model.model_path).parent.mkdir(exist_ok=True, parents=True)
 
-    def _init_model_manager(self) -> Union[NNModelManager, MLModelManager]:
+    def _init_model_manager(self) -> NNModelManager:
         self.cfg.model.input_size = list(list(self.dataloaders.values())[0].get_input_size())
 
         if OmegaConf.get_type(self.cfg.model) in [NNConfig, RNNConfig] + CNN_MODELS:

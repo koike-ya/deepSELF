@@ -8,23 +8,21 @@ from typing import Tuple, Dict, List
 import mlflow
 import numpy as np
 import pandas as pd
-from ml.models.train_managers.base_train_manager import TrainConfig
-from ml.models.train_managers.ml_train_manager import MLTrainManager
-from ml.models.train_managers.multitask_train_manager import MultitaskTrainManager
-from ml.models.train_managers.nn_train_manager import NNTrainManager
-from ml.preprocess.transforms import Transform, TransConfig
-from ml.src.cv_manager import KFoldManager
-from ml.src.cv_manager import SupportedCV
-from ml.src.dataloader import DataConfig
-from ml.src.dataloader import set_dataloader, set_ml_dataloader
-from ml.src.metrics import get_metric_list
-from ml.utils.enums import TrainManagerType, DataLoaderType
-from ml.utils.utils import Metrics
+
+from deepself.models.train_managers.base_train_manager import TrainConfig
+from deepself.models.train_managers.nn_train_manager import NNTrainManager
+from deepself.preprocess.transforms import Transform, TransConfig
+from deepself.src.cv_manager import KFoldManager
+from deepself.src.cv_manager import SupportedCV
+from deepself.src.dataloader import DataConfig
+from deepself.src.dataloader import set_dataloader, set_ml_dataloader
+from deepself.src.metrics import get_metric_list
+from deepself.utils.enums import TrainManagerType, DataLoaderType
+from deepself.utils.utils import Metrics
 
 logger = logging.getLogger(__name__)
 
 DATALOADERS = {'normal': set_dataloader, 'ml': set_ml_dataloader}
-TRAINMANAGERS = {'nn': NNTrainManager, 'multitask': MultitaskTrainManager, 'ml': MLTrainManager}
 
 
 @dataclass
@@ -65,7 +63,7 @@ class BaseExperimentor(metaclass=ABCMeta):
         self.label_func = label_func
         self.dataset_cls = dataset_cls
         self.data_loader_cls = DATALOADERS[cfg['data_loader'].value]
-        self.train_manager_cls = TRAINMANAGERS[cfg['train_manager'].value]
+        self.train_manager_cls = NNTrainManager
         self.train_manager = None
         self.process_func = process_func
         self.test = cfg['test']

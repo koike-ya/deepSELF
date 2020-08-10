@@ -2,16 +2,15 @@ from dataclasses import dataclass, field
 from typing import List, Any
 
 from hydra.core.config_store import ConfigStore
-from ml.models.ml_models.decision_trees import DecisionTreeConfig
-from ml.models.ml_models.toolbox import MlModelManagerConfig
-from ml.models.nn_models.cnn import CNNConfig
-from ml.models.nn_models.cnn_rnn import CNNRNNConfig
-from ml.models.nn_models.nn import NNConfig
-from ml.models.nn_models.panns_cnn14 import PANNsConfig
-from ml.models.nn_models.pretrained_models import PretrainedConfig
-from ml.models.nn_models.rnn import RNNConfig
-from ml.tasks.base_experiment import BaseExptConfig
-from ml.utils.nn_config import SGDConfig, AdamConfig
+
+from deepself.models.nn_models.cnn import CNNConfig
+from deepself.models.nn_models.cnn_rnn import CNNRNNConfig
+from deepself.models.nn_models.nn import NNConfig
+from deepself.models.nn_models.panns_cnn14 import PANNsConfig
+from deepself.models.nn_models.pretrained_models import PretrainedConfig
+from deepself.models.nn_models.rnn import RNNConfig
+from deepself.tasks.base_experiment import BaseExptConfig
+from deepself.utils.nn_config import SGDConfig, AdamConfig
 
 nn_model_list = [('nn', NNConfig), ('cnn', CNNConfig), ('rnn', RNNConfig), ('cnn_rnn', CNNRNNConfig)]
 nn_model_list.extend([(model_name, CNNConfig) for model_name in ['logmel_cnn', 'attention_cnn', 'panns', '1dcnn_rnn']])
@@ -19,9 +18,7 @@ pretrained_models = ['resnet', 'resnet152', 'alexnet', 'wideresnet', 'resnext', 
                      'googlenet', 'mobilenet', 'panns', 'resnext_wsl']
 pretrained_model_list = [(model_name, PretrainedConfig) for model_name in pretrained_models]
 extended_models = [('panns', PANNsConfig)]
-ml_model_list = [(model_name, MlModelManagerConfig) for model_name in ['knn', 'sgdc', 'svm', 'rf', 'nb']]
-tree_model_list = [(model_name, DecisionTreeConfig) for model_name in ['xgboost', 'catboost', 'lightgbm']]
-model_list = nn_model_list + pretrained_model_list + extended_models + ml_model_list + tree_model_list
+model_list = nn_model_list + pretrained_model_list + extended_models
 
 
 defaults = [

@@ -24,7 +24,7 @@ def nn_args(parser):
 
 from dataclasses import dataclass, field
 from typing import List
-from ml.utils.nn_config import NNModelConfig
+from deepself.utils.nn_config import NNModelConfig
 
 
 @dataclass

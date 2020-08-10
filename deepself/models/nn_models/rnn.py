@@ -4,7 +4,8 @@ from collections import OrderedDict
 
 import torch
 import torch.nn as nn
-from ml.models.nn_models.nn_utils import initialize_weights
+
+from deepself.models.nn_models.nn_utils import initialize_weights
 
 supported_rnns = {
     'lstm': nn.LSTM,
@@ -14,8 +15,8 @@ supported_rnns = {
 
 
 from dataclasses import dataclass
-from ml.utils.enums import RNNType
-from ml.utils.nn_config import NNModelConfig
+from deepself.utils.enums import RNNType
+from deepself.utils.nn_config import NNModelConfig
 
 
 @dataclass

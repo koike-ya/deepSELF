@@ -4,8 +4,9 @@ from pathlib import Path
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from ml.models.nn_models.stft import Spectrogram, LogmelFilterBank
-from ml.utils.nn_config import NNModelConfig
+
+from deepself.models.nn_models.stft import Spectrogram, LogmelFilterBank
+from deepself.utils.nn_config import NNModelConfig
 
 
 @dataclass

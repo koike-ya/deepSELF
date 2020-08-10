@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List
 
-from ml.models.model_managers.base_model_manager import ModelConfig
+from deepself.models.model_managers.base_model_manager import ModelConfig
 
 
 @dataclass

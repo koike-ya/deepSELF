@@ -4,9 +4,10 @@ from typing import List
 import numpy as np
 import pandas as pd
 import torch
-from ml.utils.enums import TaskType
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import WeightedRandomSampler
+
+from deepself.utils.enums import TaskType
 
 
 @dataclass
@@ -16,6 +17,7 @@ class DataConfig:
     task_type: TaskType = TaskType.classify
     n_jobs: int = 4             # Number of workers used in data-loading
     sample_balance: List[float] = field(default_factory=lambda: [])  # Sampling label balance from dataset
+    tta: int = 0  # Number of test time augmentation ensemble
 
 
 def set_dataloader(dataset, phase, cfg, shuffle=False):

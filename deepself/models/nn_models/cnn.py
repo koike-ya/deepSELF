@@ -11,7 +11,7 @@ import torch.nn as nn
 
 from dataclasses import dataclass, field
 from typing import List
-from ml.utils.nn_config import NNModelConfig
+from deepself.utils.nn_config import NNModelConfig
 
 
 @dataclass

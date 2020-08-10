@@ -14,10 +14,11 @@ import pandas as pd
 import torch
 from hydra import utils
 from joblib import Parallel, delayed
-from ml.src.dataset import ManifestWaveDataSet
-from ml.tasks.base_experiment import typical_train, typical_experiment
-from ml.utils.config import ExptConfig, before_hydra
-from ml.utils.utils import dump_dict
+
+from deepself.src.dataset import ManifestWaveDataSet
+from deepself.tasks.base_experiment import typical_train, typical_experiment
+from deepself.utils.config import ExptConfig, before_hydra
+from deepself.utils.utils import dump_dict
 
 
 @dataclass
@@ -104,7 +105,7 @@ def main(cfg, expt_dir, hyperparameters):
     dataset_cls = ManifestWaveDataSet
     cfg, groups = create_manifest(cfg, expt_dir)
 
-    process_func = ['logmel', 'time_mask']
+    process_func = ['logmel', 'normalize']
 
     patterns = list(itertools.product(*hyperparameters.values()))
     val_results = pd.DataFrame(np.zeros((len(patterns), len(hyperparameters) + len(metrics_names['val']))),
@@ -178,6 +179,8 @@ def hydra_main(cfg: ExampleEscConfig):
         'data.sample_balance': ['same'],
         'transformer.n_mels': [cfg.transformer.n_mels],
     }
+    if cfg.train.model_type.value == 'panns':
+        cfg.train.model.n_mels = cfg.transformer.n_mels
 
     cfg.expt_id = f'{cfg.train.model_type.value}'
     expt_dir = Path(utils.to_absolute_path('output')) / 'example_esc' / f'{cfg.expt_id}'

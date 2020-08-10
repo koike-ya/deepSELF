@@ -1,6 +1,6 @@
 import unittest
 
-from ml.src.metrics import Metric
+from deepself.src.metrics import Metric
 
 
 class TestMetrics(unittest.TestCase):

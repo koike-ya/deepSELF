@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 
 import torch
-from ml.models.nn_models.cnn import CNNConfig
-from ml.models.nn_models.nn_utils import get_param_size
-from ml.models.nn_models.rnn import RNNClassifier, supported_rnns, RNNConfig
 from torch import nn
+
+from deepself.models.nn_models.cnn import CNNConfig
+from deepself.models.nn_models.nn_utils import get_param_size
+from deepself.models.nn_models.rnn import RNNClassifier, supported_rnns, RNNConfig
 
 
 @dataclass

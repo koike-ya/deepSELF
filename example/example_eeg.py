@@ -11,16 +11,18 @@ import hydra
 import mlflow
 import numpy as np
 import pandas as pd
+import torch
 from hydra import utils
 from joblib import Parallel, delayed
-from ml.models.nn_models.cnn import CNNConfig
-from ml.models.nn_models.cnn_rnn import CNNRNNConfig
-from ml.models.nn_models.rnn import RNNConfig
-from ml.src.dataset import ManifestWaveDataSet
-from ml.tasks.base_experiment import typical_train, typical_experiment
-from ml.utils.config import ExptConfig, before_hydra
-from ml.utils.utils import dump_dict
 from omegaconf import OmegaConf
+
+from deepself.models.nn_models.cnn import CNNConfig
+from deepself.models.nn_models.cnn_rnn import CNNRNNConfig
+from deepself.models.nn_models.rnn import RNNConfig
+from deepself.src.dataset import ManifestWaveDataSet
+from deepself.tasks.base_experiment import typical_train, typical_experiment
+from deepself.utils.config import ExptConfig, before_hydra
+from deepself.utils.utils import dump_dict
 
 BINARY_LABELS = {'Z': 0, 'O': 0, 'N': 0, 'F': 0, 'S': 1}
 
@@ -45,7 +47,7 @@ def set_load_func(sr, one_audio_sec):
         elif wave.shape[0] < const_length:
             n_pad = (const_length - wave.shape[0]) // 2 + 1
             wave = np.pad(wave[:const_length], n_pad)[:const_length]
-        return wave.reshape((1, -1))
+        return torch.from_numpy(wave.reshape((1, -1)))
 
     return load_func
 
@@ -217,7 +219,7 @@ def hydra_main(cfg: ExampleEEGConfig):
             'sample_balance': ['same'],
         }
 
-    cfg.expt_id = f'{OmegaConf.get_type(cfg.train.model_type)}'
+    cfg.expt_id = f'{cfg.train.model_type.value}'
     expt_dir = Path(utils.to_absolute_path('output')) / 'example_face' / f'{cfg.expt_id}'
     expt_dir.mkdir(exist_ok=True, parents=True)
     main(cfg, expt_dir, hyperparameters)

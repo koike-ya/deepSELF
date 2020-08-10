@@ -14,14 +14,15 @@ import pandas as pd
 import torch
 from hydra import utils
 from joblib import Parallel, delayed
-from ml.models.nn_models.cnn import CNNConfig
-from ml.models.nn_models.cnn_rnn import CNNRNNConfig
-from ml.models.nn_models.rnn import RNNConfig
-from ml.src.dataset import ManifestDataSet
-from ml.tasks.base_experiment import typical_train, typical_experiment
-from ml.utils.config import ExptConfig, before_hydra
-from ml.utils.utils import dump_dict
 from omegaconf import OmegaConf
+
+from deepself.models.nn_models.cnn import CNNConfig
+from deepself.models.nn_models.cnn_rnn import CNNRNNConfig
+from deepself.models.nn_models.rnn import RNNConfig
+from deepself.src.dataset import ManifestDataSet
+from deepself.tasks.base_experiment import typical_train, typical_experiment
+from deepself.utils.config import ExptConfig, before_hydra
+from deepself.utils.utils import dump_dict
 
 LABELS = ['Anger', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral']
 
